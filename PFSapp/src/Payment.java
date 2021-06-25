@@ -1,11 +1,11 @@
 
-public class Entry 
+public class Payment 
 {
 	private double amount;
 	private String title;
 	//private String id;
 	
-	public Entry(String title, double amount) {
+	public Payment(String title, double amount) {
 		this.title = title;
 		this.amount = amount;
 	}
@@ -20,6 +20,6 @@ public class Entry
 	
 	
 	public String toString() {
-		return this.title + ": " + this.amount;
+		return this.title + ": $" + this.amount;
 	}
 }

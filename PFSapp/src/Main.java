@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -16,38 +18,6 @@ public class Main {
 		files = folder.listFiles();
 		
 		initialUI();
-		/*
-		createUI();
-		
-		Scanner in = new Scanner(System.in);
-		PaymentTracker c = null;
-		
-		System.out.println("Do you want to select a file (y/n)?");
-		String response = in.nextLine().trim();
-		if(response.equals("n") || response.equals("N")) {
-			c = new PaymentTracker();
-		} else {
-			System.out.println("Select Which File You Want:");
-			printAvailableFiles();
-			
-			response = in.nextLine().trim();
-			c = PaymentTracker.readCollection("Secret/" + response);
-		}
-		
-		c.printCollection();
-		
-		
-		
-		/*
-		Collection c = new Collection();
-		c.printCollection();
-		c.addEntry("Test1", 10.0);
-		c.addEntry("Test2", 6.50);
-		c.printCollection();
-		
-		c.saveCollection();
-		printAvailableFiles();
-		*/
 	}
 	
 	private static void printAvailableFiles() {
@@ -148,8 +118,15 @@ public class Main {
 		
 		JButton addButton = new JButton("Add");
 		addButton.addActionListener((e) -> {
-            //System.out.println();
-            //System.out.println();
+			String s1 = tf1.getText();
+			Double costCheck;
+			try {
+				costCheck = round(Double.valueOf(tf2.getText()), 2);
+				c.addEntry(s1, costCheck);
+				c.saveCollection();
+			} catch(Exception ex) {
+				System.out.println("Please pass a real price");
+			}
         });
 		
 		
@@ -172,5 +149,11 @@ public class Main {
 		frame.setVisible(true);
 	}
 	
-	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = BigDecimal.valueOf(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
 }
